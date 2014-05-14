@@ -1,0 +1,16 @@
+{
+  "name": "vk-music-downloader",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "coffee app.coffee"
+  },
+  "dependencies": {
+    "async": "^0.8.0",
+    "express": "3.4.7",
+    "jade": "*",
+    "nconf": "^0.6.9",
+    "request": "^2.34.0",
+    "vkontakte": "^0.3.0"
+  }
+}

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{req.session.accessToken}
+
+  p
+    a(href="/download_all") Download all
+    
+  ol
+    - each audio in audios
+      li
+        != audio.artist
+        | -
+        | 
+
+        a(href="#{audio.url}")= audio.title
+
