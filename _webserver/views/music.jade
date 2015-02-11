@@ -1,13 +1,10 @@
 extends layout
 
 block content
-
-
-
   #wrapper
     h1 wait what &mdash; notorious xx 
 
-    audio(preload='')
+    audio#player(preload='')
     ol
       each music in files
         li

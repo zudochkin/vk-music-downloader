@@ -5,11 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var music = require('./routes/music');
-
+var fs = require('fs');
 
 var app = express();
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+http.listen(3001);
+
+io.on('connection', function(socket){
+  socket.on('my_player_control', function(data) {
+    socket.broadcast.emit('my_player_music', data);
+  });
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,8 +32,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/music', music);
+app.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+app.get('/music', function(req, res, next) {
+  fs.readdir('./public/music', function(err, files) {
+    if (err) throw err;
+
+    res.render('music', { files: files.filter(function(file) { return file.substr(-4) === '.mp3'; }) });
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,6 +74,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
