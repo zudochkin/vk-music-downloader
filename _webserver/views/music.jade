@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+
+
+  #wrapper
+    h1 wait what &mdash; notorious xx 
+
+    audio(preload='')
+    ol
+      each music in files
+        li
+          a(href='#', data-src='/music/' + music)= music
+
+    #shortcuts
+      div
+        h1 Keyboard shortcuts:
+
+        p
+          em &rarr;
+          |  Next track
+        |         
+        p
+          em &larr;
+          |  Previous track
+        |         
+        p
+          em Space
+          |  Play/pause
