@@ -82,8 +82,14 @@ app.get '/download_all', (req, res) ->
 
 app.get '/', (req, res) ->
   if req.session.accessToken
+    nconf.set('access_token', req.session.accessToken)
+
+    nconf.save (err) -> throw err if err
+
     res.locals.req = req
+
     vk = vkontakte(req.session.accessToken)
+
     vk 'audio.get', {}, (err, audios) ->
       throw err  if err
 
@@ -104,7 +110,7 @@ app.get '/', (req, res) ->
         res.redirect '/'
 
     else
-      link = "https://oauth.vk.com/authorize?response_type=code&display=mobile&client_id=#{APP_ID}&redirect_uri=#{REDIRECT_URL}&scope=audio"
+      link = "https://oauth.vk.com/authorize?response_type=code&display=mobile&client_id=#{APP_ID}&redirect_uri=#{REDIRECT_URL}&scope=audio,offline"
       res.render 'unathorized',
         link_href: link
 

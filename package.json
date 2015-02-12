@@ -10,6 +10,7 @@
     "express": "3.4.7",
     "jade": "*",
     "nconf": "^0.6.9",
+    "progress": "^1.1.8",
     "request": "^2.34.0",
     "sanitize-filename": "^1.1.1",
     "vkontakte": "^0.3.0"
