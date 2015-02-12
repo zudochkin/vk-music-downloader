@@ -11,12 +11,12 @@ To download the whole music from your VK.com audio collection, you should do tho
 7. If everything is alright, you should see **Download all** link
 8. By clicking it you'll start downloading process
 9. Then go get a beer so you can relax while your music is downloading
-![Downloading process screenshot](https://raw.githubusercontent.com/vredniy/vk-music-downloader/master/screenshots/screenshot.png)
+![Downloading process screenshot](screenshots/screenshot.png)
 
 ### Command Line tool for music downloading
 Follow the (1-5) steps on listed above and start command line downloader by `coffee downloader.coffee`.
 You'll see progress bar that looks like image below
-![Downloading process via command line tool](https://raw.githubusercontent.com/vredniy/vk-music-downloader/master/screenshots/screenshot_downloader.png)
+![Downloading process via command line tool](screenshots/screenshot_downloader.png)
 
 #### Extra Bonus
 
@@ -28,4 +28,5 @@ Webserver with js player. You will be able to play next or previous song over lo
 on http://localhost:3000/music page. For remote control follow the  http://localhost:3000/music page and you'll see two links: one for next and one for prev
 song playback control.
 
-![Webserver for music playback control](https://raw.githubusercontent.com/vredniy/vk-music-downloader/master/screenshots/screenshot_webserver.png)
+![Webserver for music playback control](screenshots/screenshot_webserver.png)
+
