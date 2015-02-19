@@ -20,24 +20,32 @@ APP_SECRET = nconf.get('vk_app_secret')
 DOWNLOAD_DIR = './music'
 
 
-# TODO: replace with CURL with automatically resume transfer
-downloadFileWget = (audioObj, callback) ->
+execCurl = (audioObj, fileName, callback) ->
+  command = "curl #{audioObj.url} -o \"#{DOWNLOAD_DIR}/#{fileName}\""
+
+  exec(command, (err, stdout, stderr) ->
+    throw err if err
+    callback()
+  )
+
+
+downloadFileCurl = (audioObj, callback) ->
   fileName = sanitizeFilename "#{audioObj.artist} - #{audioObj.title}.mp3"
 
   fs.exists "#{DOWNLOAD_DIR}/#{fileName}", (exists) ->
     if exists
-      # console.log "#{fileName} already exists"
-      callback()
-    else
-      wget = "wget #{audioObj.url} -O \"#{DOWNLOAD_DIR}/#{fileName}\""
+      command = "curl -sI #{audioObj.url} | grep Content-Length | awk '{print $2}'"
 
-      child = exec(wget, (err, stdout, stderr) ->
-        if err
-          throw err
-        else
+      exec(command, (err, stdout, stderr) ->
+        size = fs.statSync("#{DOWNLOAD_DIR}/#{fileName}")['size']
+
+        if parseInt(stdout) == size
           callback()
-          # console.log "#{fileName} downloaded to #{DOWNLOAD_DIR}"
+        else
+          execCurl audioObj, fileName, callback
       )
+    else
+      execCurl audioObj, fileName, callback
 
 vk = vkontakte nconf.get('access_token')
 
@@ -45,9 +53,8 @@ vk 'audio.get', {}, (err, audios) ->
   throw err if err
 
   q = async.queue (audio, callback) ->
-    # console.log "start processing audio '#{audio.artist} - #{audio.title}'"
-    downloadFileWget audio, callback
-  , 2
+    downloadFileCurl audio, callback
+  , 4
 
   q.drain = -> console.log 'completed'
 
@@ -56,5 +63,3 @@ vk 'audio.get', {}, (err, audios) ->
   audios.forEach (audio) ->
     q.push audio, (err) ->
       bar.tick()
-      # console.log "#{audio.artist} - #{audio.title} has been processed"
-
