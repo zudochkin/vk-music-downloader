@@ -10,7 +10,8 @@ To download the whole music from your VK.com audio collection, you should do tho
 6. click **Sign in** link and allow access to your music collection
 7. If everything is alright, you should see **Download all** link
 8. By clicking it you'll start downloading process
-9. Then go get a beer so you can relax while your music is downloading
+9. You can filter by music albums and download the whole playlist
+10. Then go get a beer so you can relax while your music is downloading
 ![Downloading process screenshot](screenshots/screenshot.png)
 
 ### Command Line tool for music downloading
