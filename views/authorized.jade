@@ -9,11 +9,11 @@ block content
     - each album in albums
       if album.title
         li
-          a(href="/album/#{album.album_id}")= album.title
+          a(href="/?album_id=#{album.album_id}")= album.title
 
   h2 Your audios:
   p
-    a(href="/download_all") Download All
+    a(href="/download_all#{req.query.album_id ? '?album_id=' + req.query.album_id : '' }") Download All
 
   ol
     - each audio in audios

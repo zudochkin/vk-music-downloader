@@ -63,9 +63,11 @@ vkontakte = require 'vkontakte'
 
 app.get '/download_all', (req, res) ->
   if req.session.accessToken
+    album_id = req.query.album_id
+
     vk = vkontakte(req.session.accessToken)
 
-    vk 'audio.get', {}, (err, audios) ->
+    vk 'audio.get', {album_id: album_id}, (err, audios) ->
       throw err if err
 
       q = async.queue (audio, callback) ->
@@ -89,14 +91,17 @@ app.get '/', (req, res) ->
     res.locals.req = req
 
     vk = vkontakte(req.session.accessToken)
+
+    album_id = req.query.album_id
   
     vk 'audio.getAlbums', {}, (err, albums) ->
         throw err  if err
-        vk 'audio.get', {}, (err, audios) ->
+        vk 'audio.get', {album_id: album_id}, (err, audios) ->
           throw err  if err 
           
           res.render 'authorized',
-            albums: albums, audios: audios   
+            albums: albums
+            audios: audios   
 
   else
     if req.query.code
