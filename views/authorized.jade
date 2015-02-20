@@ -2,11 +2,19 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{req.session.accessToken}
+  p Access token: #{req.session.accessToken}
 
+  h2 Albums:
+  ul
+    - each album in albums
+      if album.title
+        li
+          a(href="/album/#{album.album_id}")= album.title
+
+  h2 Your audios:
   p
-    a(href="/download_all") Download all
-    
+    a(href="/download_all") Download All
+
   ol
     - each audio in audios
       li

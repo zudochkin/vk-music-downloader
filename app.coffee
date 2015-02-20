@@ -29,7 +29,7 @@ app.use express.logger('dev')
 app.use express.json()
 app.use express.urlencoded()
 app.use express.methodOverride()
-app.use express.cookieParser('your secret here')
+app.use express.cookieParser('mnas2doiYHcx4vlkweD7SAiooiDSO9')
 app.use express.session()
 app.use app.router
 app.use express.static(path.join(__dirname, 'public'))
@@ -89,12 +89,14 @@ app.get '/', (req, res) ->
     res.locals.req = req
 
     vk = vkontakte(req.session.accessToken)
-
-    vk 'audio.get', {}, (err, audios) ->
-      throw err  if err
-
-      res.render 'authorized',
-        audios: audios
+  
+    vk 'audio.getAlbums', {}, (err, albums) ->
+        throw err  if err
+        vk 'audio.get', {}, (err, audios) ->
+          throw err  if err 
+          
+          res.render 'authorized',
+            albums: albums, audios: audios   
 
   else
     if req.query.code
