@@ -6,6 +6,8 @@ block content
 
   h2 Albums:
   ul
+    li
+      a(href="/") All Audios
     - each album in albums
       if album.title
         li
@@ -21,6 +23,4 @@ block content
         != audio.artist
         | -
         | 
-
         a(href="#{audio.url}")= audio.title
-

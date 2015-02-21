@@ -37,7 +37,6 @@ app.use express.static(path.join(__dirname, 'public'))
 # development only
 app.use express.errorHandler()  if 'development' is app.get('env')
 
-
 sanitizeFilename = require 'sanitize-filename'
 
 downloadFileWget = (audioObj, callback) ->
@@ -57,7 +56,6 @@ downloadFileWget = (audioObj, callback) ->
           callback()
           console.log "#{fileName} downloaded to #{DOWNLOAD_DIR}"
       )
-
 
 vkontakte = require 'vkontakte'
 
@@ -101,7 +99,7 @@ app.get '/', (req, res) ->
           
           res.render 'authorized',
             albums: albums
-            audios: audios   
+            audios: audios
 
   else
     if req.query.code
