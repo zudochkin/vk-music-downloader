@@ -81,22 +81,25 @@ app.get '/download_all', (req, res) ->
     res.redirect '/'
 
 app.get '/', (req, res) ->
-  if req.session.accessToken
-    nconf.set('access_token', req.session.accessToken)
+  accessToken = req.session.accessToken || nconf.get('access_token')
 
-    nconf.save (err) -> throw err if err
+  if accessToken
+    if !nconf.get('access_token')
+      nconf.set('access_token', req.session.accessToken)
+
+      nconf.save (err) -> throw err if err
 
     res.locals.req = req
 
-    vk = vkontakte(req.session.accessToken)
+    vk = vkontakte(accessToken)
 
     album_id = req.query.album_id
-  
+
     vk 'audio.getAlbums', {}, (err, albums) ->
-        throw err  if err
+        throw err if err
         vk 'audio.get', {album_id: album_id}, (err, audios) ->
-          throw err  if err 
-          
+          throw err if err
+
           res.render 'authorized',
             albums: albums
             audios: audios
@@ -110,7 +113,7 @@ app.get '/', (req, res) ->
         method: 'GET'
         uri: link
       , (error, response, body) ->
-        throw error  if error
+        throw error if error
         req.session.accessToken = JSON.parse(body).access_token
         res.redirect '/'
 
