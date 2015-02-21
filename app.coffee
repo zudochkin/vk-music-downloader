@@ -29,14 +29,13 @@ app.use express.logger('dev')
 app.use express.json()
 app.use express.urlencoded()
 app.use express.methodOverride()
-app.use express.cookieParser('your secret here')
+app.use express.cookieParser('mnas2doiYHcx4vlkweD7SAiooiDSO9')
 app.use express.session()
 app.use app.router
 app.use express.static(path.join(__dirname, 'public'))
 
 # development only
 app.use express.errorHandler()  if 'development' is app.get('env')
-
 
 sanitizeFilename = require 'sanitize-filename'
 
@@ -58,14 +57,15 @@ downloadFileWget = (audioObj, callback) ->
           console.log "#{fileName} downloaded to #{DOWNLOAD_DIR}"
       )
 
-
 vkontakte = require 'vkontakte'
 
 app.get '/download_all', (req, res) ->
   if req.session.accessToken
+    album_id = req.query.album_id
+
     vk = vkontakte(req.session.accessToken)
 
-    vk 'audio.get', {}, (err, audios) ->
+    vk 'audio.get', {album_id: album_id}, (err, audios) ->
       throw err if err
 
       q = async.queue (audio, callback) ->
@@ -90,11 +90,16 @@ app.get '/', (req, res) ->
 
     vk = vkontakte(req.session.accessToken)
 
-    vk 'audio.get', {}, (err, audios) ->
-      throw err  if err
-
-      res.render 'authorized',
-        audios: audios
+    album_id = req.query.album_id
+  
+    vk 'audio.getAlbums', {}, (err, albums) ->
+        throw err  if err
+        vk 'audio.get', {album_id: album_id}, (err, audios) ->
+          throw err  if err 
+          
+          res.render 'authorized',
+            albums: albums
+            audios: audios
 
   else
     if req.query.code

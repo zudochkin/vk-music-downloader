@@ -2,17 +2,25 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{req.session.accessToken}
+  p Access token: #{req.session.accessToken}
 
+  h2 Albums:
+  ul
+    li
+      a(href="/") All Audios
+    - each album in albums
+      if album.title
+        li
+          a(href="/?album_id=#{album.album_id}")= album.title
+
+  h2 Your audios:
   p
-    a(href="/download_all") Download all
-    
+    a(href="/download_all#{req.query.album_id ? '?album_id=' + req.query.album_id : '' }") Download All
+
   ol
     - each audio in audios
       li
         != audio.artist
         | -
         | 
-
         a(href="#{audio.url}")= audio.title
-
