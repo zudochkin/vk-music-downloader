@@ -1,27 +1,17 @@
 extends layout
 
 block content
-  #wrapper
-    h1 wait what &mdash; notorious xx 
+  h1#section1 Music Playlist
 
-    audio#player(preload='')
-    ol
-      each music in files
-        li
-          a(href='#', data-src='/music/' + music)= music
+  .panel.panel-default
+    .panel-heading
+      a.pull-right(href='#') View all
 
-    #shortcuts
-      div
-        h1 Keyboard shortcuts:
+      h4 All tracks
+    |    &#x9;&#x9;&#x9;
+    .panel-body
+      audio#player(preload='')
 
-        p
-          em &rarr;
-          |  Next track
-        |         
-        p
-          em &larr;
-          |  Previous track
-        |         
-        p
-          em Space
-          |  Play/pause
+      .list-group#music
+        each music in files
+          a.list-group-item(href='#', data-src='/music/' + music)= music

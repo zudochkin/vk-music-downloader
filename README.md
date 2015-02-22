@@ -21,7 +21,8 @@ You'll see progress bar that looks like image below
 
 #### Extra Bonus
 
-Stom downloader server and run another one from **_webserver** folder with command `node bin/www`.
+Stop downloader server and run another one from **_webserver** folder with command `npm start`.
+Before you should execute `bower install` for installing components dependencies.
 
 Symlink music folder to public (folders not yet supported) and that's it.
 
@@ -30,4 +31,3 @@ on http://localhost:3000/music page. For remote control follow the  http://local
 song playback control.
 
 ![Webserver for music playback control](screenshots/screenshot_webserver.png)
-

@@ -5,3 +5,5 @@ music/
 config/credentials.json
 
 npm-debug.log
+
+**/bower_components

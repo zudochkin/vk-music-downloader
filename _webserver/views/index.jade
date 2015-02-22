@@ -1,10 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  h1#section1 Music Playback Control
 
   div#control
     a._next-song(href='#') Next Song
     br
     a._prev-song(href='#') Prev Song
+    br
+    a._play-pause(href='#') Play/Pause

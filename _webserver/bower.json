@@ -1,0 +1,32 @@
+{
+  "name": "music_webserver",
+  "version": "0.0.1",
+  "homepage": "https://github.com/vredniy/vk-music-downloader",
+  "authors": [
+    "Dima Zudochkin <dnd.pliz@gmail.com>"
+  ],
+  "description": "Remote control your music via Websockets",
+  "main": "app.coffee",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "vk",
+    "music",
+    "websocket"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "jquery": "~2.1.3"
+  }
+}
